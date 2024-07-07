@@ -30,17 +30,15 @@ exports.registerUser = async (req, res, next) => {
   res.redirect("login?registrationdone");
 };
 
-exports.loginUser = async (req, res, next) => {
+exports.loginUser = (req, res) => {
   passport.authenticate("local", {
     successRedirect: "/?loginsuccess",
     failureRedirect: "/login?error",
-    failureFlash: true,
-  })(req, res, next);
+  })(req, res);
 };
 
 exports.logoutUser = async (req, res, next) => {
-  // Add user logout logic here
-  res.redirect("/");
+  req.logout(() => res.redirect("/login?loggedout"));
 };
 
 exports.init = (req, res) => {
